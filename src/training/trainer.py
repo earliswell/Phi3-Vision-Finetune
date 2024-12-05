@@ -212,6 +212,7 @@ class Phi3VTrainer(Trainer):
                 self.tokenizer.save_pretrained(output_dir)
 
             if self.processor is not None:
+                self.processor.chat_template = self.processor.tokenizer.chat_template
                 self.processor.save_pretrained(output_dir)
 
             # Good practice: save your training arguments together with the trained model
