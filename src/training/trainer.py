@@ -203,6 +203,8 @@ class Phi3VTrainer(Trainer):
                     else:
                         torch.save(state_dict, os.path.join(output_dir, WEIGHTS_NAME))
             else:
+                if state_dict is None:
+                    state_dict = self.model.state_dict()
                 state_dict = {k:v for k, v in state_dict.items() if "wte" not in k}
                 self.model.save_pretrained(
                     output_dir, state_dict=state_dict, safe_serialization=self.args.save_safetensors
