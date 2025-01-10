@@ -15,6 +15,7 @@ This repository contains a script for training the [Phi3-Vision model](https://h
 
 ## Update
 
+- [2025/01/11] Updated 8-bit training with ms_amp fp8.
 - [2024/11/05] Added memory efficient 8-bit training.
 - [2024/10/08] Demo code supports video and multi-image input.
 - [2024/10/07] 🔥Supports text-only data.
@@ -31,6 +32,7 @@ This repository contains a script for training the [Phi3-Vision model](https://h
 
 - [Fine-tuning Phi3-Vision Series](#fine-tuning-phi3-vision-series)
   - [Other projects](#other-projects)
+  - [News](#news)
   - [Update](#update)
   - [Table of Contents](#table-of-contents)
   - [Supported Features](#supported-features)
@@ -40,6 +42,7 @@ This repository contains a script for training the [Phi3-Vision model](https://h
   - [Dataset Preparation](#dataset-preparation)
   - [Training](#training)
     - [Full Finetuning](#full-finetuning)
+    - [Full Finetuning with 8-bit](#full-finetuning-with-8-bit)
     - [Finetune with LoRA](#finetune-with-lora)
     - [Train with video dataset](#train-with-video-dataset)
       - [Merge LoRA Weights](#merge-lora-weights)
@@ -204,7 +207,8 @@ bash scripts/finetune.sh
 bash scripts/finetune_8bit.sh
 ```
 
-This script will finetune the model with 8bit-adamw and fp8 model dtype. If you run out of vram, you could use this.
+This script will finetune the model with fp8 model dtype. If you run out of vram, you could use this.<br>
+You can even use offloading with fp8 training. For detailed config, you could change the deepspeed config files.
 
 ### Finetune with LoRA
 
