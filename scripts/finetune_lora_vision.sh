@@ -21,8 +21,8 @@ deepspeed src/training/train.py \
     --data_path /path/to/your/training/data.json \
     --image_folder /path/to/your/image/folder \
     --tune_img_projector True \
-    --freeze_vision_tower False \
-    --freeze_llm False \
+    --freeze_vision_tower True \
+    --freeze_llm True \
     --bf16 True \
     --fp16 False \
     --disable_flash_attn2 False \

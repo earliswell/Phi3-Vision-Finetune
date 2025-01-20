@@ -21,7 +21,7 @@ deepspeed src/training/train.py \
     --image_folder /path/to/your/image/folder \
     --tune_img_projector True \
     --freeze_vision_tower False \
-    --freeze_llm False \
+    --freeze_llm True \
     --bf16 True \
     --fp16 False \
     --disable_flash_attn2 False \
@@ -30,8 +30,8 @@ deepspeed src/training/train.py \
     --num_train_epochs 1 \
     --per_device_train_batch_size 4\
     --gradient_accumulation_steps 8 \
-    --learning_rate 2e-5 \
-    --projector_lr 2e-5 \
+    --learning_rate 1e-4 \
+    --projector_lr 1e-5 \
     --vision_lr 2e-6 \
     --weight_decay 0. \
     --warmup_ratio 0.03 \
