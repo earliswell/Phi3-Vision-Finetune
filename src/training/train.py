@@ -42,17 +42,17 @@ def set_requires_grad(parameters, requires_grad):
         p.requires_grad = requires_grad
 
 def configure_vision_tower(model, training_args, compute_dtype, device):
-    vision_tower = model.vision_embed_tokens.img_processor.vision_model
+    vision_tower = model.model.vision_embed_tokens.img_processor.vision_model
     vision_tower.to(dtype=compute_dtype, device=device)
 
-    img_projection_params = model.vision_embed_tokens.img_projection.parameters()
+    img_projection_params = model.model.vision_embed_tokens.img_projection.parameters()
     set_requires_grad(img_projection_params, training_args.tune_img_projector)
 
     vision_model_params = vision_tower.parameters()
     set_requires_grad(vision_model_params, not training_args.freeze_vision_tower)
 
     if training_args.bits in [4, 8]:
-        model.vision_embed_tokens.img_processor.to(dtype=compute_dtype, device=device)
+        model.model.vision_embed_tokens.img_processor.to(dtype=compute_dtype, device=device)
 
 def configure_llm(model, training_args):
     lm_head_params = model.lm_head.parameters()
@@ -172,10 +172,10 @@ def train():
     # When using LoRA, the model is rapped once more.
     if training_args.lora_enable:
         training_args.freeze_llm = True
-        model_to_configure = model.model.model
+        model_to_configure = model.model
         configure_llm(model_to_configure, training_args)
     else:
-        model_to_configure = model.model
+        model_to_configure = model
         configure_llm(model_to_configure, training_args)
     
     if not training_args.vision_lora:
