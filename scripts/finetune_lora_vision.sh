@@ -13,8 +13,9 @@ deepspeed src/training/train.py \
     --lora_enable True \
     --vision_lora True \
     --lora_namespan_exclude "['lm_head', 'embed_tokens']" \
-    --lora_rank 32 \
-    --lora_alpha 16 \
+    --lora_rank 64 \
+    --lora_alpha 64 \
+    --use_dora False \
     --lora_dropout 0.05 \
     --num_lora_modules -1 \
     --deepspeed scripts/zero3.json \

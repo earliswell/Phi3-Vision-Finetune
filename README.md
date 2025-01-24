@@ -16,7 +16,8 @@ This repository contains a script for training the [Phi3-Vision model](https://h
 
 ## Update
 
-- [2025/01/25] Fix error in LoRA training.
+- [2025/01/24] Add option for using DoRA.
+- [2025/01/24] Fix error in LoRA training.
 - [2025/01/11] Updated 8-bit training with ms_amp fp8.
 - [2024/11/05] Added memory efficient 8-bit training.
 - [2024/10/08] Demo code supports video and multi-image input.
@@ -193,7 +194,7 @@ The script requires a dataset formatted according to the LLaVA specification. Th
 ## Training
 
 ~~**Note:** With the mixed-dataset (e.g. some data in a batch have images while some don't) It only supports with zero2.~~<br>
-**Note:**It does not support mixed-modality dataset for now. I'm working on for supporting.
+**Note:** It does not support mixed-modality dataset for now. I'm working on for supporting.
 
 To run the training script, use the following command:
 
@@ -243,6 +244,9 @@ bash scripts/finetune_lora_vision.sh
 - `--freeze_vision_tower` (bool): Option to freeze vision_model (default: False).
 - `--freeze_llm` (bool): Option to freeze LLM (default: False).
 - `--tune_img_projector` (bool): Option to finetune img_projector (default: True).
+- `--lora_enable` (bool): Option for enabling LoRA (default: False)
+- `--vision_lora` (bool): Option for including vision_tower to the LoRA module. The `lora_enable` should be `True` to use this option. (default: False)
+- `--use_dora` (bool): Option for using DoRA instead of LoRA. The `lora_enable` should be `True` to use this option. (default: False)
 - `--num_lora_modules` (int): Number of target modules to add LoRA (-1 means all layers).
 - `--vision_lr` (float): Learning rate for `vision_tower` and spatial merging layer.
 - `--projector_lr` (float): Learning rate for `img_projection`.
