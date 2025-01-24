@@ -7,6 +7,7 @@ MODEL_NAME="microsoft/Phi-3.5-vision-instruct"
 export PYTHONPATH=src:$PYTHONPATH
 
 # If you want to tune the `embed_token` with LoRA, You need to tune `lm_head` together
+# The projector is included in the vision module, so you should freeze the img_projector with it.
 
 deepspeed src/training/train.py \
     --lora_enable True \
@@ -20,7 +21,7 @@ deepspeed src/training/train.py \
     --model_id $MODEL_NAME \
     --data_path /path/to/your/training/data.json \
     --image_folder /path/to/your/image/folder \
-    --tune_img_projector True \
+    --tune_img_projector False \
     --freeze_vision_tower True \
     --freeze_llm True \
     --bf16 True \
