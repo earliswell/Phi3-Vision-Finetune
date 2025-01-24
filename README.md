@@ -16,6 +16,7 @@ This repository contains a script for training the [Phi3-Vision model](https://h
 
 ## Update
 
+- [2025/01/25] Fix error in LoRA training.
 - [2025/01/11] Updated 8-bit training with ms_amp fp8.
 - [2024/11/05] Added memory efficient 8-bit training.
 - [2024/10/08] Demo code supports video and multi-image input.

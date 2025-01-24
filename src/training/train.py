@@ -84,14 +84,13 @@ def train():
         assert not training_args.vision_lora, \
             "Error: training_args.lora_enable is not enabled, but training_args.vision_lora is enabled."
 
+    if training_args.lora_namespan_exclude is not None:
+        training_args.lora_namespan_exclude = ast.literal_eval(training_args.lora_namespan_exclude)
     else:
-        if training_args.lora_namespan_exclude is not None:
-            training_args.lora_namespan_exclude = ast.literal_eval(training_args.lora_namespan_exclude)
-        else:
-            training_args.lora_namespan_exclude = []
+        training_args.lora_namespan_exclude = []
 
-        if not training_args.vision_lora:
-            training_args.lora_namespan_exclude += ["vision_model", "img_projection"]
+    if not training_args.vision_lora:
+        training_args.lora_namespan_exclude += ["vision_model", "img_projection"]
 
     local_rank = training_args.local_rank
     compute_dtype = (torch.float16 if training_args.fp16 else (torch.bfloat16 if training_args.bf16 else torch.float32))
@@ -121,6 +120,10 @@ def train():
         _attn_implementation="flash_attention_2" if not training_args.disable_flash_attn2 else "eager", 
         **bnb_model_from_pretrained_args
     )
+
+    model_to_configure = model
+    configure_llm(model_to_configure, training_args)
+    configure_vision_tower(model_to_configure, training_args, compute_dtype, training_args.device)
 
     model.config.use_cache = False
 
@@ -159,7 +162,6 @@ def train():
                                                trust_remote_code=True,
                                                num_crops=training_args.num_crops,
                                                model_max_length=training_args.max_seq_length)
-    
 
     # use unk rather than eos token to prevent endless generation
     processor.tokenizer.pad_token = processor.tokenizer.unk_token
@@ -168,18 +170,6 @@ def train():
 
     model.config.tokenizer_model_max_length = processor.tokenizer.model_max_length
     model.config.tokenizer_padding_side = processor.tokenizer.padding_side
-    
-    # When using LoRA, the model is rapped once more.
-    if training_args.lora_enable:
-        training_args.freeze_llm = True
-        model_to_configure = model.model
-        configure_llm(model_to_configure, training_args)
-    else:
-        model_to_configure = model
-        configure_llm(model_to_configure, training_args)
-    
-    if not training_args.vision_lora:
-        configure_vision_tower(model_to_configure, training_args, compute_dtype, training_args.device)
         
     model.config.vision_lr = training_args.vision_lr
     model.config.projector_lr = training_args.projector_lr
