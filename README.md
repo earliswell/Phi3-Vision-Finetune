@@ -192,8 +192,8 @@ The script requires a dataset formatted according to the LLaVA specification. Th
 
 ## Training
 
-**Note:** Freezing LLM would only work without LoRA (including vision_model LoRA).<br>
-**Note:** With the mixed-dataset (e.g. some data in a batch have images while some don't) It only supports with zero2.
+~~**Note:** With the mixed-dataset (e.g. some data in a batch have images while some don't) It only supports with zero2.~~<br>
+**Note:**It does not support mixed-modality dataset for now. I'm working on for supporting.
 
 To run the training script, use the following command:
 
