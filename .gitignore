@@ -169,7 +169,3 @@ scripts_tmp/
 logs/*.log
 
 testing.ipynb
-
-src/model
-
-generate.py

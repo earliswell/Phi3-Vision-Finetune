@@ -4,6 +4,9 @@ import transformers
 from peft import LoraConfig, get_peft_model
 import ast
 from transformers import AutoProcessor, BitsAndBytesConfig, AutoModelForCausalLM
+from model.Phi3_5_vision.modeling_phi3_v import Phi3VForCausalLM as Phi3_5VForCausalLM
+from model.Phi3_5_vision.modeling_phi3_v import Phi3VConfig as Phi3_5VConfig
+from model.Phi3_vision.modeling_phi3_v import Phi3VForCausalLM, Phi3VConfig
 from training.trainer import Phi3VTrainer
 from training.data import make_supervised_data_module
 from training.params import DataArguments, ModelArguments, TrainingArguments
@@ -110,16 +113,25 @@ def train():
                 bnb_4bit_quant_type=training_args.quant_type,
             )
         ))
-
-
-    model = AutoModelForCausalLM.from_pretrained(
-        model_args.model_id,
-        torch_dtype=compute_dtype,
-        cache_dir=training_args.cache_dir, 
-        trust_remote_code=True,
-        _attn_implementation="flash_attention_2" if not training_args.disable_flash_attn2 else "eager", 
-        **bnb_model_from_pretrained_args
-    )
+    
+    if "Phi-3.5" in model_args.model_id:
+        config = Phi3_5VConfig.from_pretrained(model_args.model_id)
+        config._attn_implementation = "flash_attention_2" if not training_args.disable_flash_attn2 else "eager"
+        model = Phi3_5VForCausalLM.from_pretrained(
+            model_args.model_id,
+            torch_dtype=compute_dtype,
+            config=config, 
+            **bnb_model_from_pretrained_args
+        )
+    else:
+        config = Phi3VConfig.from_pretrained(model_args.model_id)
+        config._attn_implementation = "flash_attention_2" if not training_args.disable_flash_attn2 else "eager"
+        model = Phi3VForCausalLM.from_pretrained(
+            model_args.model_id,
+            torch_dtype=compute_dtype,
+            config=config, 
+            **bnb_model_from_pretrained_args
+        )
 
     model_to_configure = model
     configure_llm(model_to_configure, training_args)

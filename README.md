@@ -16,6 +16,7 @@ This repository contains a script for training the [Phi3-Vision model](https://h
 
 ## Update
 
+- [2025/02/19] 🔥Supports mixed-modality data.
 - [2025/01/24] Add option for using DoRA.
 - [2025/01/24] Fix error in LoRA training.
 - [2025/01/11] Updated 8-bit training with ms_amp fp8.
@@ -193,8 +194,8 @@ The script requires a dataset formatted according to the LLaVA specification. Th
 
 ## Training
 
-~~**Note:** With the mixed-dataset (e.g. some data in a batch have images while some don't) It only supports with zero2.~~<br>
-**Note:** It does not support mixed-modality dataset for now. I'm working on for supporting.
+**Note:** Deepspeed zero2 is faster than zero3, however it consumes more memory. Also, most of the time zero2 is more stable than zero3.<br><br>
+**Tip:** You could use `adamw_bnb_8bit` for optimizer to save memory.
 
 To run the training script, use the following command:
 
@@ -238,6 +239,7 @@ bash scripts/finetune_lora_vision.sh
 - `--image_folder` (str): Path to the images folder as referenced in the LLaVA formatted training data. **(Required)**
 - `--model_id` (str): Path to the Phi3-vision model. **(Required)**
 - `--output_dir` (str): Output directory for model checkpoints (default: "output/test_train").
+- `optim` (str): Optimizer to use (default: "adamw_torch").
 - `--num_train_epochs` (int): Number of training epochs (default: 1).
 - `--per_device_train_batch_size` (int): Training batch size per GPU per forwarding step.
 - `--gradient_accumulation_steps` (int): Gradient accumulation steps (default: 4).
@@ -339,7 +341,7 @@ You can also set the max_frame for sampling the frames in the video. Default is 
 - [x] Demo with WebUI
 - [x] Support Phi3.5-vision
 - [x] Support for video data
-- [ ] Fast infernece with [fast-gpt](https://pytorch.org/blog/accelerating-generative-ai-2/)
+- [x] Support mixed-modality data
 
 ## Known Issues
 

@@ -117,8 +117,6 @@ class LazySupervisedDataset(Dataset):
 
         all_input_ids = [torch.tensor([1])] # bos token id
         all_labels = [torch.tensor([-100])] # ignore bos token
-        all_pixel_values = []
-        all_image_sizes = []
 
         for idx, j in enumerate(range(0, len(sources), 2)):
             user_input = sources[j]
@@ -130,8 +128,8 @@ class LazySupervisedDataset(Dataset):
             if idx == 0:
                 inputs = processor(user_input, images, return_tensors='pt')
                 prompt_input_ids = inputs['input_ids']
-                all_pixel_values.append(inputs.get('pixel_values'))
-                all_image_sizes.append(inputs.get('image_sizes'))
+                pixel_values = inputs.get('pixel_values')
+                image_sizes = inputs.get('image_sizes')
 
             else:
                 prompt_input_ids = processor.tokenizer(user_input, add_special_tokens=False, return_tensors='pt')['input_ids']
@@ -156,18 +154,17 @@ class LazySupervisedDataset(Dataset):
         input_ids = torch.cat(all_input_ids, dim=0).to(torch.long)
         labels = torch.cat(all_labels, dim=0).to(torch.long)
 
-        pixel_values = torch.cat([pv for pv in all_pixel_values if pv is not None and pv.numel() > 0], dim=0) if any(pv is not None and pv.numel() >0 for pv in all_pixel_values) else None
-        image_sizes = torch.cat([isize for isize in all_image_sizes if isize is not None and isize.numel() > 0], dim=0) if any(isize is not None and isize.numel()>0 for isize in all_image_sizes) else None
-
         attention_mask = (input_ids > -1000000).to(torch.long)
 
         data_dict = dict(
             input_ids=input_ids,
-            pixel_values=pixel_values,
-            image_sizes=image_sizes,
             attention_mask=attention_mask,
             labels=labels,
         )
+
+        
+        if pixel_values is not None:
+            data_dict.update(pixel_values=pixel_values, image_sizes=image_sizes)
         
         return data_dict
 
@@ -186,8 +183,9 @@ class DataCollatorForSupervisedDataset(object):
         for example in examples:
             batch_input_ids.append(example["input_ids"])
             batch_label_ids.append(example["labels"])
-            batch_pixel_values.append(example.get("pixel_values"))
-            batch_image_sizes.append(example.get("image_sizes"))
+            if "pixel_values" in example:
+                batch_pixel_values.append(example["pixel_values"])
+                batch_image_sizes.append(example["image_sizes"])
         
         input_ids = pad_sequence(
             batch_input_ids, padding_side='right', padding_value=self.pad_token_id
@@ -195,8 +193,6 @@ class DataCollatorForSupervisedDataset(object):
 
         attention_mask = input_ids != self.pad_token_id
         labels = pad_sequence(batch_label_ids, padding_side='right', padding_value=IGNORE_INDEX)
-        pixel_values = torch.cat([pv for pv in batch_pixel_values if pv is not None and pv.numel() > 0], dim=0) if any(pv is not None and pv.numel() > 0 for pv in batch_pixel_values) else None
-        image_sizes = torch.cat([isize for isize in batch_image_sizes if isize is not None and isize.numel() > 0], dim=0) if any(isize is not None and isize.numel() > 0 for isize in batch_image_sizes) else None
 
         batch_dict = dict(
             input_ids=input_ids,
@@ -204,9 +200,11 @@ class DataCollatorForSupervisedDataset(object):
             attention_mask=attention_mask,
         )
 
-        if pixel_values is not None:
+        if len(batch_pixel_values) > 0:
+            pixel_values = torch.cat(batch_pixel_values, dim=0)
+            image_sizes = torch.cat(batch_image_sizes, dim=0)
             batch_dict.update(pixel_values=pixel_values, image_sizes=image_sizes)
-
+            
         return batch_dict
 
 
