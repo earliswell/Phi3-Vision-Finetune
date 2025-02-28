@@ -20,8 +20,8 @@ deepspeed src/training/train.py \
     --num_lora_modules -1 \
     --deepspeed scripts/zero3.json \
     --model_id $MODEL_NAME \
-    --data_path /path/to/your/training/data.json \
-    --image_folder /path/to/your/image/folder \
+    --data_path /home/dabs/InHeon/car_analysis/llm_data/train_llm_data.json \
+    --image_folder /home/dabs/InHeon/car_analysis/llm_data/llm_train_images \
     --tune_img_projector False \
     --freeze_vision_tower True \
     --freeze_llm True \
@@ -30,8 +30,8 @@ deepspeed src/training/train.py \
     --disable_flash_attn2 False \
     --output_dir output/lora_vision_test \
     --num_crops 16 \
-    --num_train_epochs 2 \
-    --per_device_train_batch_size 4 \
+    --num_train_epochs 1 \
+    --per_device_train_batch_size 2 \
     --gradient_accumulation_steps 4 \
     --learning_rate 2e-4 \
     --weight_decay 0. \
@@ -40,6 +40,6 @@ deepspeed src/training/train.py \
     --logging_steps 1 \
     --tf32 True \
     --gradient_checkpointing True \
-    --report_to wandb \
+    --report_to tensorboard \
     --lazy_preprocess True \
     --dataloader_num_workers 4

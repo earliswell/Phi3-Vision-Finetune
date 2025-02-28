@@ -1,0 +1,288 @@
+{
+    "os": "Linux-5.15.0-124-generic-x86_64-with-glibc2.31",
+    "python": "3.10.14",
+    "heartbeatAt": "2025-02-28T07:01:31.209438",
+    "startedAt": "2025-02-28T07:01:30.364865",
+    "docker": null,
+    "cuda": null,
+    "args": [
+        "--local_rank=0",
+        "--lora_enable",
+        "True",
+        "--vision_lora",
+        "True",
+        "--lora_namespan_exclude",
+        "['lm_head', 'embed_tokens']",
+        "--lora_rank",
+        "64",
+        "--lora_alpha",
+        "64",
+        "--use_dora",
+        "False",
+        "--lora_dropout",
+        "0.05",
+        "--num_lora_modules",
+        "-1",
+        "--deepspeed",
+        "scripts/zero3.json",
+        "--model_id",
+        "microsoft/Phi-3.5-vision-instruct",
+        "--data_path",
+        "/home/dabs/InHeon/car_analysis/llm_data/train_llm_data.json",
+        "--image_folder",
+        "/home/dabs/InHeon/car_analysis/llm_data/llm_train_images",
+        "--tune_img_projector",
+        "False",
+        "--freeze_vision_tower",
+        "True",
+        "--freeze_llm",
+        "True",
+        "--bf16",
+        "True",
+        "--fp16",
+        "False",
+        "--disable_flash_attn2",
+        "False",
+        "--output_dir",
+        "output/lora_vision_test",
+        "--num_crops",
+        "16",
+        "--num_train_epochs",
+        "2",
+        "--per_device_train_batch_size",
+        "4",
+        "--gradient_accumulation_steps",
+        "4",
+        "--learning_rate",
+        "2e-4",
+        "--weight_decay",
+        "0.",
+        "--warmup_ratio",
+        "0.03",
+        "--lr_scheduler_type",
+        "cosine",
+        "--logging_steps",
+        "1",
+        "--tf32",
+        "True",
+        "--gradient_checkpointing",
+        "True",
+        "--report_to",
+        "wandb",
+        "--lazy_preprocess",
+        "True",
+        "--dataloader_num_workers",
+        "4"
+    ],
+    "state": "running",
+    "program": "/home/dabs/InHeon/car_analysis/Phi3-Vision-Finetune/src/training/train.py",
+    "codePathLocal": "src/training/train.py",
+    "codePath": "src/training/train.py",
+    "git": {
+        "remote": "https://github.com/2U1/Phi3-Vision-Finetune.git",
+        "commit": "6634118c5037efb5d06f5011b313444c14d58df0"
+    },
+    "email": null,
+    "root": "/home/dabs/InHeon/car_analysis/Phi3-Vision-Finetune",
+    "host": "DABS",
+    "username": "dabs",
+    "executable": "/home/dabs/.conda/envs/phi3v/bin/python",
+    "cpu_count": 16,
+    "cpu_count_logical": 32,
+    "cpu_freq": {
+        "current": 3366.6793437499996,
+        "min": 0.0,
+        "max": 0.0
+    },
+    "cpu_freq_per_core": [
+        {
+            "current": 3200.0,
+            "min": 0.0,
+            "max": 0.0
+        },
+        {
+            "current": 3599.999,
+            "min": 0.0,
+            "max": 0.0
+        },
+        {
+            "current": 3600.0,
+            "min": 0.0,
+            "max": 0.0
+        },
+        {
+            "current": 3483.007,
+            "min": 0.0,
+            "max": 0.0
+        },
+        {
+            "current": 3200.0,
+            "min": 0.0,
+            "max": 0.0
+        },
+        {
+            "current": 3200.0,
+            "min": 0.0,
+            "max": 0.0
+        },
+        {
+            "current": 3599.999,
+            "min": 0.0,
+            "max": 0.0
+        },
+        {
+            "current": 3200.0,
+            "min": 0.0,
+            "max": 0.0
+        },
+        {
+            "current": 3472.783,
+            "min": 0.0,
+            "max": 0.0
+        },
+        {
+            "current": 3599.999,
+            "min": 0.0,
+            "max": 0.0
+        },
+        {
+            "current": 3599.999,
+            "min": 0.0,
+            "max": 0.0
+        },
+        {
+            "current": 3292.61,
+            "min": 0.0,
+            "max": 0.0
+        },
+        {
+            "current": 3200.0,
+            "min": 0.0,
+            "max": 0.0
+        },
+        {
+            "current": 3491.28,
+            "min": 0.0,
+            "max": 0.0
+        },
+        {
+            "current": 3599.999,
+            "min": 0.0,
+            "max": 0.0
+        },
+        {
+            "current": 3599.999,
+            "min": 0.0,
+            "max": 0.0
+        },
+        {
+            "current": 3600.0,
+            "min": 0.0,
+            "max": 0.0
+        },
+        {
+            "current": 3200.0,
+            "min": 0.0,
+            "max": 0.0
+        },
+        {
+            "current": 3200.0,
+            "min": 0.0,
+            "max": 0.0
+        },
+        {
+            "current": 3200.0,
+            "min": 0.0,
+            "max": 0.0
+        },
+        {
+            "current": 3600.0,
+            "min": 0.0,
+            "max": 0.0
+        },
+        {
+            "current": 3424.183,
+            "min": 0.0,
+            "max": 0.0
+        },
+        {
+            "current": 3200.0,
+            "min": 0.0,
+            "max": 0.0
+        },
+        {
+            "current": 3200.0,
+            "min": 0.0,
+            "max": 0.0
+        },
+        {
+            "current": 3200.0,
+            "min": 0.0,
+            "max": 0.0
+        },
+        {
+            "current": 3200.0,
+            "min": 0.0,
+            "max": 0.0
+        },
+        {
+            "current": 3200.0,
+            "min": 0.0,
+            "max": 0.0
+        },
+        {
+            "current": 3600.0,
+            "min": 0.0,
+            "max": 0.0
+        },
+        {
+            "current": 3200.0,
+            "min": 0.0,
+            "max": 0.0
+        },
+        {
+            "current": 3200.0,
+            "min": 0.0,
+            "max": 0.0
+        },
+        {
+            "current": 3200.0,
+            "min": 0.0,
+            "max": 0.0
+        },
+        {
+            "current": 3594.065,
+            "min": 0.0,
+            "max": 0.0
+        }
+    ],
+    "disk": {
+        "/": {
+            "total": 3665.4424362182617,
+            "used": 1671.4878959655762
+        }
+    },
+    "gpu": "NVIDIA RTX A6000",
+    "gpu_count": 4,
+    "gpu_devices": [
+        {
+            "name": "NVIDIA RTX A6000",
+            "memory_total": 51527024640
+        },
+        {
+            "name": "NVIDIA RTX A6000",
+            "memory_total": 51527024640
+        },
+        {
+            "name": "NVIDIA RTX A6000",
+            "memory_total": 51527024640
+        },
+        {
+            "name": "NVIDIA RTX A6000",
+            "memory_total": 51527024640
+        }
+    ],
+    "memory": {
+        "total": 251.51173782348633
+    }
+}

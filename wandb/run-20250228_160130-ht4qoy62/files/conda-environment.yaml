@@ -1,5 +1,6 @@
 name: phi3v
 channels:
+  - conda-forge
   - defaults
 dependencies:
   - _libgcc_mutex=0.1=main
@@ -52,6 +53,7 @@ dependencies:
       - exceptiongroup==1.2.0
       - executing==2.0.1
       - filelock==3.13.1
+      - flash-attn==2.7.4.post1
       - frozenlist==1.4.1
       - fsspec==2024.3.1
       - ftfy==6.2.0
@@ -59,7 +61,7 @@ dependencies:
       - gitpython==3.1.43
       - gmpy2==2.1.2
       - hjson==3.1.0
-      - huggingface-hub
+      - huggingface-hub==0.29.1
       - idna==3.4
       - intel-openmp==2024.1.0
       - ipykernel==6.29.3
@@ -146,9 +148,9 @@ dependencies:
       - torchvision==0.20.1
       - tornado==6.1
       - tqdm==4.66.4
-      - triton==3.1.0
       - traitlets==5.14.2
       - transformers==4.48.0
+      - triton==3.1.0
       - trl==0.8.6
       - typing-extensions==4.9.0
       - tyro==0.8.4
@@ -160,3 +162,4 @@ dependencies:
       - widgetsnbextension==4.0.13
       - xxhash==3.4.1
       - yarl==1.9.4
+prefix: /home/dabs/.conda/envs/phi3v
